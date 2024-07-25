@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Cart API</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="pizza.js"></script>
+</head>
+<body x-data="pizzaCart" x-init="init()">
+    <div class="container">
+
+       
+        <div x-show="!cartId">
+           
+            <div>
+                Username: <input type="text" x-model="username">
+                <button x-on:click="login" x-show="username">Login</button>
+                <button x-on:click="logout" x-show="username">Logout</button>   
+            </div>
+        </div>
+
+       
+        
+        <div x-show="cartId">
+            <div>
+                <button x-on:click="logout"><i>Logout</i></button>
+                <div x-show="cartId">
+                </div>
+                <div x-text="cartId"></div>
+
+
+                 <h1 class="pizza-heading" ><i>Perfect Pizzeria</i></h1><img src="public/pizza guy img.jpg" width="200px">
+                <div class="message" x-text="message"></div>
+                
+                <table class="pizza">
+                    <h2 class="order-heading"><i>Let's Order!</i></h2>
+                    <tr>
+                        <th>Flavour</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                    <template x-for="pizza in cartPizzas" :key="pizza.id">
+                        <tr>
+                            <td x-text="pizza.flavour"></td>
+                            <td x-text="pizza.size"></td>
+                            <td x-text="pizza.price"></td>
+                            <td>
+                                <button x-on:click="removePizzaFromCart(pizza.id)">-</button>
+                                <span x-text="pizza.qty"></span>
+                                <button x-on:click="addPizzaToCart(pizza.id)">+</button>
+                            </td>
+                            <td x-text="pizza.total"></td>
+                        </tr>
+                    </template>
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <td colspan="2">R<span x-text="cartTotal"></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Enter payment amount</td>
+                        <td>
+                            <input type="text" x-model="paymentAmount">
+                        </td>
+                        <td><button x-on:click="payForCart()"><i> Let's Pay</i></button></td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+            <div>
+                
+            </div>
+            <div class="menu-heading"><h2><i>Pizza Menu</i></h2></div>
+
+            
+                
+                <template x-for="pizza in pizzas" :key="pizza.id">
+                    <div class="pizza">
+                        <img src="public/pizza1.jpg" width="180">
+                        <h5 x-text="pizza.flavour"></h5>
+                        <span x-text="pizza.size"></span> @
+                        <strong>R<span x-text="pizza.price"></span></strong>
+                        <div>
+                            <button class="btn" x-on:click="addPizzaToCart(pizza.id)"><i>Add to cart</i></button>
+                            <button class="btn" x-on:click="removePizzaFromCart(pizza.id)"><i>Remove from cart</i></button></i>
+                            
+            
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pizza contact_us">
+        <h2>Stay in Touch!</h2>
+        Telephone: 011 567 8978
+        <div>
+        Email:   info@perfectpizzeria.com</div>
+        <div>     Twitter: @perfectpizzeria</div>
+   
+        
+    </div>
+</body>
+</html>
+
+
